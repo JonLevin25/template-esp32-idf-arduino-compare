@@ -1,21 +1,25 @@
 #include <Arduino.h>
 
-#define BLINK_GPIO CONFIG_BLINK_GPIO
-#define BLINK_DELAY 1000
+#define DELAY_MS 1000
+#define BAUDRATE 9600
+#define MSG "Msg from ARDUINO FW"
 
 void setup()
 {
     Serial.begin(115200);
-    pinMode(BLINK_GPIO, OUTPUT);
+    Serial2.begin(BAUDRATE, SERIAL_8N1, 16, 17); // TODO: what is "inverted?" MSB vs LSB first?
 }
 
 void loop()
 {
-    Serial.println("led on");
-    digitalWrite(BLINK_GPIO, HIGH);
-    delay(BLINK_DELAY);
-    
-    Serial.println("led off");
-    digitalWrite(BLINK_GPIO, LOW);
-    delay(BLINK_DELAY);
+    while (Serial2.available()) {
+        String str = Serial2.readString();
+        Serial.println(str);
+    }
+
+    if (Serial2.availableForWrite()) {
+        Serial2.write(MSG);
+    }
+
+    delay(DELAY_MS);
 }

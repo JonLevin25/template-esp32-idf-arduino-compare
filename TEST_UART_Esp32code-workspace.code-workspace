@@ -4,5 +4,13 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"task.h": "c",
+			"sdkconfig.h": "c",
+			"freertos.h": "c",
+			"uart.h": "c",
+			"*.ipp": "c"
+		}
+	}
 }
